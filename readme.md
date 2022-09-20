@@ -1,60 +1,39 @@
-# Tauri & React  Template
+# little App
 
-Hi! here some files to start a new **Tauri app**. If you want to learn about wtf is Tauri go to  [Tauri docs](https://tauri.studio/docs/getting-started/prerequisites) , or you can read  [Tauri RUST docs](https://docs.rs/tauri/latest/tauri/) .
+Esse sera o primeiro app feito en rust e typescript, o objetivo e um app que possa gerir uma base de dados em sqlite, e que possa se sincronizar com um servidor.
 
-# How to start
+# quer testar? vem eu te mostro por onde comeca
 
-    git clone https://github.com/dnettoRaw/tauri
+## baixando a ultima release
+
+### [github releases](https://github.com/dnettoRaw/littleApp/releases)
+
+## compilando o projeto voce mesmi
+
+    git clone https://github.com/dnettoRaw/littleApp.git
+
+> instala as dependencias
 
     npm i
 
->  edit the names etc and add somme stuffs 
+> copia o .env.example para .env e coloca as variaveis de ambiente 
+
+> para a versao dev 
 
     npm t:dev
 
-> deploy your amazing application
+> para a versao executavel
 
-## Tree files and folders
-```
-├── README.md
-├── index.html
-├── package.json
-├── src
-│ 	├── assets
-│ 	│ 	├── favicon.svg
-│ 	│ 	└── logo.svg
-│ 	├── css
-│ 	│ 	├── App.css
-│ 	│ 	└── index.css
-│ 	├── modules
-│ 	├── pages
-│ 	│ 	├── App.tsx
-│ 	│ 	└── main.tsx
-│ 	└── vite-env.d.ts
-├── src-tauri
-│ 	├── Cargo.toml
-│ 	├── icons
-│ 	│ 	└──[icons  files]
-│ 	├── src
-│ 	│ 	├── build.rs
-│ 	│ 	├── main.rs
-│ 	│ 	└── custon-function
-│ 	│ 		└──[functions].rs
-│ 	└── tauri.conf.json
-├── test
-│ 	└── [your  test  files].tsx
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts
-```
+    npm t:build
+ 
+[npm](https://www.npmjs.com/), [node](https://nodejs.org/en/) e [rust](https://www.rust-lang.org/pt-BR/) sao necessarios para rodar o projeto
 
 # todo
 - [x] npm commands in readme 
-- [ ] yarn commands in readme
-- [ ] auto change log
-- [x] auto update version package 
-- [ ] lint
-- [ ] test files 
+- [ ] interface user 
+- [ ] backend functions
+- [ ] api functions
+- [ ] testes unitarios
 
 ## Commands
 | npm              |                    Description                    |
@@ -66,26 +45,6 @@ Hi! here some files to start a new **Tauri app**. If you want to learn about wtf
 |`npm run t`       |  to run tauri commands from main folder
 |`npm run t:dev`   |  shortcut for tauri dev
 |`npm run t:build` |  shortcut for tauri build
-|`npm run publish` |  create a stable version of the app, ~~and copies it to the main folder~~ 
-|                  |  (update package minor version) &(~~olds files is deleted by default~~)
-
-| bonus section    |                             |
-|------------------|-----------------------------|
-|`npm run v:minor` |  update package minor version `0.1.0`
-|`npm run v:major` |  update package major version `1.0.0`
-|`npm run clean`   |  This command `deletes` all autogeneration files.
-|`npm run test`    |  run test in your test folder (empty by default )
-
-
-## Little flow cart
-
-```mermaid
-graph LR
-A[REACT APP] --> B(VITE compiler)
-B --> C(Tauri)
-B -- Web Broswer in DEV --> D{web application}
-C --> D
-```
 
 ## bug
 
