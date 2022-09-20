@@ -3,56 +3,88 @@
 #   ##   ## ##   ##   F: test.yml                              #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:02:00 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/09/20 11:50:12 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/09/20 15:37:43 by:dnettoRaw      #
 #     ###########                                              #
+
 
 name: Test
 on:
   push:
     branches:
       - '*'
+    tags:
+      - "test"
   pull_request:
   workflow_dispatch:
 
 jobs:
-  test:
+  test-tauri:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-10.15, ubuntu-latest, windows-latest]
+        platform: [macos-latest, ubuntu-latest, windows-latest]
+
     runs-on: ${{ matrix.platform }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+    - name: setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - name: install Rust stable
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    - name: install dependencies (ubuntu only)
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+    - name: install app dependencies and build it
+      run: yarn && yarn build && yarn test
+    - uses: tauri-apps/tauri-action@v0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Node.js setup
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
+# jobs:
+#   test:
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         platform: [macos-10.15, ubuntu-latest, windows-latest]
+#     runs-on: ${{ matrix.platform }}
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
 
-      - name: Rust setup
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+#       - name: Node.js setup
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 16
 
-      - name: Rust Cache
-        uses: Swatinem/rust-cache@v1
-        with:
-          working-directory: ./src-tauri
+#       - name: Rust setup
+#         uses: actions-rs/toolchain@v1
+#         with:
+#           toolchain: stable
 
-      - name: Install webkit2gtk (ubuntu only)
-        if: matrix.platform == 'ubuntu-latest'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y webkit2gtk-4.0
+#       - name: Rust Cache
+#         uses: Swatinem/rust-cache@v1
+#         with:
+#           working-directory: ./src-tauri
 
-      - run: npm install
+#       - name: Install webkit2gtk (ubuntu only)
+#         if: matrix.platform == 'ubuntu-latest'
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get install -y webkit2gtk-4.0
 
-      - run: npm run build
+#       - run: npm install
 
-      - run: npm run test
+#       - run: npm run build
 
-      - name: Build
-        uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - run: npm run test
+
+#       - name: Build
+#         uses: tauri-apps/tauri-action@v0
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
