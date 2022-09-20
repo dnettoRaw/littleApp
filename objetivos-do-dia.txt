@@ -1,0 +1,4 @@
+objetivos do dia
+- [ ] iniciar as configuracoes
+- [ ] arrumar os workflows
+- [ ]verificar as compilacoes

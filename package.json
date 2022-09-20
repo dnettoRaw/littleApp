@@ -1,5 +1,5 @@
 {
-    "name": "new_app",
+    "name": "little-app",
     "private": true,
     "version": "0.0.5",
     "scripts": {
@@ -8,6 +8,7 @@
         "preview": "vite preview",
         "tauri": "tauri",
         "t:dev": "tauri dev",
+        "t:build": "tauri build",
         "test": "echo 1"
     },
     "dependencies": {
