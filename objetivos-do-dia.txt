@@ -1,5 +1,5 @@
 objetivos do dia
 - [X] iniciar as configuracoes
-- [?] arrumar os workflows
-- [ ] verificar as compilacoes
+- [X] arrumar os workflows
+- [X] verificar as compilacoes
 - [ ] login page
