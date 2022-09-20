@@ -3,10 +3,10 @@
 /*  ##   ## ##   ##   F: windows.rs                           */
 /*       ## ##                                                */
 /*                    C: 2022/06/02 16:38:13 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/09/20 09:55:23 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/09/20 12:13:30 by:dnettoRaw     */
 /*    ###########                                             */
 
-#[cfg(windows)]
+
 use tauri::{
  CustomMenuItem, Menu, MenuItem
 };
