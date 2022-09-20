@@ -1,3 +1,11 @@
+/*      #######                                               */
+/*   ###       ###                                            */
+/*  ##   ## ##   ##   F: App.tsx                              */
+/*       ## ##                                                */
+/*                    C: 2022/09/20 11:16:30 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/09/20 11:16:44 by:dnettoRaw     */
+/*    ###########                                             */
+
 import { useState } from 'react'
 import logo from '../assets/logo.svg'
 import '../css/App.css'

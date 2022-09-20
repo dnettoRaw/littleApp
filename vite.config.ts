@@ -3,5 +3,12 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()]
+  plugins: [react()],
+  root: './src',
+  build: {
+    minify: 'esbuild',
+    target: "esnext",
+    sourcemap: true,
+    outDir: '../dist'
+    }
 })
