@@ -17,8 +17,12 @@
       "iconAsTemplate": true
     },
     "allowlist": {
+      "fs": {
+        "all": true,
+        "scope": ["$APP/*", "$DESKTOP/*", "$TEMP/*"]
+      },
       "path": {
-        "all": true 
+        "all": true
       },
       "all": true,
       "clipboard": {
@@ -63,7 +67,7 @@
     },
     "security": {
       "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
-   },
+    },
     "updater": {
       "active": false
     }

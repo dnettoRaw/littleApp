@@ -3,10 +3,11 @@
 /*  ##   ## ##   ##   F: App.tsx                              */
 /*       ## ##                                                */
 /*                    C: 2022/09/20 11:16:30 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/09/20 11:16:44 by:dnettoRaw     */
-/*    ###########                                             */
+/*  ##   ## ##   ##   U: 2022/09/21 15:25:40 by:dnettoRaw     */
+/*    ###########                                             */ 
 
 import { useState } from 'react'
+import { invoke } from '@tauri-apps/api/tauri'
 import logo from '../assets/logo.svg'
 import '../css/App.css'
 
@@ -19,6 +20,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React! lops</p>
         <p>
+          <button type="button" onClick={() => invoke('test')}> let's print in terminal</button>
           <button type="button" onClick={() => setCount((count) => count + 1)}>
             count is: {count}
           </button>

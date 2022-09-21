@@ -1,5 +1,9 @@
 objetivos do dia
-- [X] iniciar as configuracoes
-- [X] arrumar os workflows
-- [X] verificar as compilacoes
+typescript 
 - [ ] login page
+rust
+- [ ] sql init
+- [ ] sql insert
+- [ ] sql select
+- [ ] sql update
+- [ ] sql delete
