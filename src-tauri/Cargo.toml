@@ -19,10 +19,12 @@ tauri-bundler = { version = "1.0.0", features = [] }
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.0.1", features = ["api-all", "system-tray"] }
+rusqlite = { version = "0.28.0", features = ["bundled"] }
+machine-uid = "0.2.0"
 
 [package.metadata.winres]
 OriginalFilename = "myapp.EXE"
-LegalCopyright = "Copyright you © 2022"
+LegalCopyright = "Copyright dnettoRaw © 2022"
 
 [target.'cfg(windows)'.build-dependencies]
 winres = "0.1"

@@ -3,7 +3,8 @@
 /*  ##   ## ##   ##   F: mod.rs                               */
 /*       ## ##                                                */
 /*                    C: 2022/09/21 11:48:32 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/09/21 11:51:45 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/09/22 10:24:04 by:dnettoRaw     */
 /*    ###########                                             */
 
 pub mod crud;
+pub mod tool;

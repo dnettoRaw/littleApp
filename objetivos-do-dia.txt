@@ -1,9 +1,11 @@
 objetivos do dia
-typescript 
-- [ ] login page
 rust
-- [ ] sql init
-- [ ] sql insert
-- [ ] sql select
-- [ ] sql update
-- [ ] sql delete
+[ ] sql init   | [ ] config file
+[ ] sql insert | [ ] 
+[ ] sql select | [ ] 
+[ ] sql update | [ ] 
+[ ] sql delete | [ ] 
+
+
+
+#########################################
