@@ -3,26 +3,27 @@
 /*  ##   ## ##   ##   F: crud.rs                              */
 /*       ## ##                                                */
 /*                    C: 2022/09/21 06:08:50 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/09/23 10:23:46 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/09/27 07:18:56 by:dnettoRaw     */
 /*    ###########                                             */
 
-#[allow(dead_code)]
+#![allow(dead_code)]
 // aqui voce encontrara as funções que irão fazer a comunicação com o banco de dados
 
 use tauri::api::path;
 use tauri::Config;
 
 
-use rusqlite::{Connection, Result};
+// use rusqlite::{Connection, Result};
 
 use crate::{get_config, function::config_file::FILE_MAIN};
 
-use super::tool::{push_data, create_file_if_not_exists, create_folder_if_not_exists};
-
+use super::tool::{ create_file_if_not_exists, create_folder_if_not_exists};
+// push_data/
 
 #[tauri::command]
 pub fn test() {
-    println!("test {}", get_config!(FILE_MAIN));
+    let (_result, str) = get_config!(FILE_MAIN);
+    println!("test {}", str);
 }
 
     
@@ -35,6 +36,7 @@ fn create_db() {
 
 fn create_table() {
 
+    
 }
 
 
@@ -44,6 +46,8 @@ fn create_table() {
 
         // println!("app_dir {:?}", path::app_dir(&config).unwrap());
         // println!("audio_dir {:?}", path::audio_dir().unwrap());       	
+
+        
         // println!("cache_dir {:?}", path::cache_dir().unwrap());       
         // println!("config_dir {:?}", path::config_dir().unwrap());       
         // println!("data_dir {:?}", path::data_dir().unwrap());       	

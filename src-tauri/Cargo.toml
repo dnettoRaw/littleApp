@@ -23,7 +23,8 @@ rusqlite = { version = "0.28.0", features = ["bundled"] }
 machine-uid = "0.2.0"
 
 [package.metadata.winres]
-OriginalFilename = "myapp.EXE"
+OriginalFilename = "myapp.exe"
+FileDescription = "little App"
 LegalCopyright = "Copyright dnettoRaw © 2022"
 
 [target.'cfg(windows)'.build-dependencies]

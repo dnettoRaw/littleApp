@@ -3,11 +3,12 @@
 /*  ##   ## ##   ##   F: tool.rs                              */
 /*       ## ##                                                */
 /*                    C: 2022/09/22 10:21:17 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/09/22 11:36:47 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/09/27 06:24:03 by:dnettoRaw     */
 /*    ###########                                             */
 
-use std::fs::{self, OpenOptions};
-
+#![allow(dead_code)]
+use std::fs::{self};
+// OpenOptions
 pub fn create_folder_if_not_exists(path: &str) {
     if !fs::metadata(path).is_ok() {
         fs::create_dir(path).unwrap();
