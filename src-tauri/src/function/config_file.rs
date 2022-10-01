@@ -3,7 +3,7 @@
 /*  ##   ## ##   ##   F: config_file.rs                       */
 /*       ## ##                                                */
 /*                    C: 2022/09/22 12:23:39 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/09/27 07:21:27 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/10/01 16:13:02 by:dnettoRaw     */
 /*    ###########                                             */
 
 use machine_uid;
@@ -154,7 +154,21 @@ fn init_default(path: String) {
 }
 
 fn init_db(path: String) {
-  const CONFIG_DB: &str = "{\n\t\"db\" : {\n\t\t\"useLocal\" : \"true\",\n\t\t\"localTimeout\" : \"86400\",\n\t\t\"localName\" : \"-1\",\n\t\t\"host\" : \"-1\",\n\t\t\"port\" : \"-1\",\n\t\t\"user\" : \"root\",\n\t\t\"password\" : \"root\",\n\t\t\"database\" : \"littleApp\"\n\t}\n}";
+  const CONFIG_DB: &str = r#"{
+		"name" : "littleApp.sqlite"
+		"useLocal" : "true",
+		"localTimeout" : "86400",
+    "localName" : "littleApp.sqlite",
+    conection : {
+      use_lan : "false",
+      "host" : "-1",
+      "port" : "-1",
+    },
+    auth : {
+      "password" : "root",
+      "user" : "root",
+    }
+}"#;
   if !fs::metadata(&path).is_ok() {
     fs::write(path, CONFIG_DB).unwrap();
   }
