@@ -21,6 +21,7 @@ function App() {
         <p>Hello Vite + React! lops</p>
         <p>
           <button type="button" onClick={() => invoke('test')}> let's print in terminal</button>
+          <button type="button" onClick={() => invoke('create_window')}> let's print in terminal</button>
           <button type="button" onClick={() => setCount((count) => count + 1)}>
             count is: {count}
           </button>

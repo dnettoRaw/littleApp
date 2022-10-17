@@ -3,7 +3,7 @@
 /*  ##   ## ##   ##   F: crud.rs                              */
 /*       ## ##                                                */
 /*                    C: 2022/09/21 06:08:50 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/09/30 07:36:08 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/10/17 16:13:04 by:dnettoRaw     */
 /*    ###########                                             */
 
 #![allow(dead_code)]
@@ -14,7 +14,7 @@ use tauri::api::path;
 
 // use rusqlite::{Connection, Result};
 
-use crate::{get_config, function::config_file::{FILE_MAIN, INIT_CONFIGS, FILE_DB}};
+use crate::{get_config, function::config_file::{FILE_MAIN,INIT_CONFIGS, FORCE_CONFIGS, FILE_DB}};
 
 
 use super::tool::{ create_file_if_not_exists, create_folder_if_not_exists};
@@ -22,7 +22,7 @@ use super::tool::{ create_file_if_not_exists, create_folder_if_not_exists};
 
 #[tauri::command]
 pub fn test() {
-    let (_result, str) = get_config!(FILE_MAIN);
+    let (_result, str) = get_config!(FORCE_CONFIGS | FILE_MAIN);
     println!("test {}", str);
 }
 

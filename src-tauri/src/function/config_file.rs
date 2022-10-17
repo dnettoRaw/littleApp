@@ -3,14 +3,21 @@
 /*  ##   ## ##   ##   F: config_file.rs                       */
 /*       ## ##                                                */
 /*                    C: 2022/09/22 12:23:39 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/10/01 16:13:02 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/10/17 19:17:55 by:dnettoRaw     */
 /*    ###########                                             */
 
 use machine_uid;
 
+use std::fs::File;
+use std::io::Write;
+use std::io::Read;
+
+
 use std::time::SystemTime;
 use std::{fs, time::UNIX_EPOCH};
 use tauri::api::path;
+
+use crate::log;
 
 const FILE_MAIN_STR: &str = "conf.dr";
 const FILE_DB_STR: &str = "db.dr";
@@ -19,10 +26,11 @@ const FILE_EXTERN_STR: &str = "extern.dr";
 
 #[allow(dead_code)]
 pub const INIT_CONFIGS: u8 = 1 << 0;
-pub	const FILE_MAIN: u8 = 1 << 1;
-pub	const FILE_DB: u8 = 1 << 2;
-pub	const FILE_LOG: u8 = 1 << 3;
-pub	const FILE_EXTERN: u8 = 1 << 4;
+pub const FORCE_CONFIGS: u8 = 1 << 1 | INIT_CONFIGS;
+pub	const FILE_MAIN: u8 = 1 << 2;
+pub	const FILE_DB: u8 = 1 << 3;
+pub	const FILE_LOG: u8 = 1 << 4;
+pub	const FILE_EXTERN: u8 = 1 << 5;
 
 #[macro_export]
 macro_rules! get_config {
@@ -45,6 +53,7 @@ macro_rules! get_config {
 /// 
 /// # Example
 /// get_config!(INIT_CONFIGS);
+/// get_config!(FORCE_CONFIGS);
 /// get_config!(FILE_MAIN);
 /// get_config!(FILE_DB);
 /// get_config!(FILE_LOG);
@@ -60,15 +69,22 @@ macro_rules! get_config {
   
 pub fn get_config_file(opt:u8) -> (bool, String) {
   let path: String = format!(
-		"{}\\{}",
+		"{}\\{}\\{}",
 		path::local_data_dir().unwrap().to_string_lossy(),
-		"little_app"
+		"little_app",
+    "config"
 	);
-  println!("opt {} {0:b}", opt);
+  log!("opt {} {0:b}", opt);
 	// para verificar se o arquivo existe, se não existir, criar o arquivo
   if opt & INIT_CONFIGS != 0 {
+    if opt & FORCE_CONFIGS != 0 {
+      log!("force configs");
+      if let Err(e) = fs::remove_dir_all(&path) {
+        log!("Error: {}", e);
+      }
+    }
     init_confg(&path);
-    println!("init_confg");
+    log!("init_confg");
   }
 	if opt & FILE_MAIN != 0 {
     if _exists_file(&path, FILE_MAIN_STR){
@@ -77,13 +93,22 @@ pub fn get_config_file(opt:u8) -> (bool, String) {
 		return (false, String::from("error: file not found")); //not implemented yet
 	}
 	if opt & FILE_DB != 0 {
-		return (false, String::from("error: not implemented yet")); //not implemented yet
+    if _exists_file(&path, FILE_DB_STR){
+      return (true, _read_file(&path, FILE_DB_STR));
+    }
+    return (false, String::from("error: file not found")); //not implemented yet
 	}
-	if opt & FILE_LOG != 0 {
-		return (false, String::from("error: not implemented yet")); //not implemented yet
-	}
-	if opt & FILE_EXTERN != 0 {
-	 	return (false, String::from("error: not implemented yet")); //not implemented yet
+  if opt & FILE_LOG != 0 {
+    if _exists_file(&path, FILE_LOG_STR){
+      return (true, _read_file(&path, FILE_LOG_STR));
+    }
+    return (false, String::from("error: file not found")); //not implemented yet
+  }
+  if opt & FILE_EXTERN != 0 {
+	 	if _exists_file(&path, FILE_EXTERN_STR){
+      return (true, _read_file(&path, FILE_EXTERN_STR));
+    }
+    return (false, String::from("error: file not found")); //not implemented yet
 	}
 	return (false, String::from("error: no option selected"));
 
@@ -119,9 +144,9 @@ pub fn init_confg(path:&String) {
   if !fs::metadata(&path).is_ok() {
     fs::create_dir(&path).unwrap();
 	init_default(format!("{}\\{}", path, FILE_MAIN_STR));
-	init_db(format!("{}\\{}",path,FILE_DB_STR));
-	init_log(format!("{}\\{}",path,FILE_LOG_STR));
-	init_externe(format!("{}\\{}",path,FILE_EXTERN_STR));
+	init_db(format!("{}\\{}",path, FILE_DB_STR));
+	init_log(format!("{}\\{}",path, FILE_LOG_STR));
+	init_externe(format!("{}\\{}",path, FILE_EXTERN_STR));
   } else {
     if !fs::metadata(format!("{}\\{}", path, FILE_MAIN_STR)).is_ok() {
 		init_default(format!("{}\\{}",path,FILE_MAIN_STR));
@@ -154,21 +179,7 @@ fn init_default(path: String) {
 }
 
 fn init_db(path: String) {
-  const CONFIG_DB: &str = r#"{
-		"name" : "littleApp.sqlite"
-		"useLocal" : "true",
-		"localTimeout" : "86400",
-    "localName" : "littleApp.sqlite",
-    conection : {
-      use_lan : "false",
-      "host" : "-1",
-      "port" : "-1",
-    },
-    auth : {
-      "password" : "root",
-      "user" : "root",
-    }
-}"#;
+  const CONFIG_DB : &str = "{\n\t\"name\" : \"littleApp.sqlite\",\n\t\"useLocal\" : \"true\",\n\t\"local\":{\n\t\t\"Timeout\" : \"86400\",\n\t\t\"Name\" : \"littleApp.sqlite\",\n\t\t\"Path\" : \"dataBase\"\n\t},\n\t\"conection\" : {\n\t\t\"host\" : \"-1\",\n\t\t\"port\" : \"-1\"\n\t},\n\t\"auth\" : {\n\t\t\"password\" : \"root\",\n\t\t\"user\" : \"root\"\n\t}\n}";
   if !fs::metadata(&path).is_ok() {
     fs::write(path, CONFIG_DB).unwrap();
   }
@@ -187,25 +198,3 @@ fn init_externe(path: String) {
     fs::write(path, CONFIG_EXTERN).unwrap();
   }
 }
-
-
-// use std::fs::File;
-// use std::io::prelude::*;
-
-// fn main() -> std::io::Result<()> {
-//     {
-//         let mut file = File::create("test")?;
-//         // Write a slice of bytes to the file
-//         file.write_all(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])?;
-//     }
-
-//     {
-//         let mut file = File::open("test")?;
-//         // read the same file back into a Vec of bytes
-//         let mut buffer = Vec::<u8>::new();
-//         file.read_to_end(&mut buffer)?;
-//         println!("{:?}", buffer);
-//     }
-
-//     Ok(())
-// }
